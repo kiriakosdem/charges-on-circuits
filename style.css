@@ -1,0 +1,177 @@
+/* Font to Use */
+@import url('https://fonts.googleapis.com/css?family=Literata:400,500,600');
+
+/* Main Body Settings*/
+html, body{
+	/*height: 100%;
+	width: 100%;*/
+	margin: 0;
+	padding: 0;
+
+	font-family: 'Literata', sans-serif;
+	font-size: 0.95rem;
+}
+
+canvas {
+  display: block;
+}
+
+canvas:hover{
+	cursor: grab;
+}
+
+canvas:active{
+	cursor: grabbing;
+}
+
+#jscode{
+	padding: 0rem;
+	margin: 0rem;
+	min-height: 100%;
+	max-width: 100%;
+	background-color: teal;
+}
+
+/*
+background-size: contain;
+  background-color: transparent;
+  background-image: url('images/battery.png');
+  background-position: center;
+*/
+
+.mybutton{
+	color: midnightblue;
+	background-color: lightgray;
+	border-radius: 20px;
+	border-width: 1px;
+	border-color: midnightblue;
+	font-weight: bold;
+	font-family:monospace;
+	padding: 10px;
+}
+
+.mybutton:hover{
+	color: white;
+	background-color: midnightblue;
+	cursor: pointer;
+}
+
+.mybutton:active{
+	background-color: darkblue;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 15.3px 0;
+ background: transparent;
+}
+.slider:focus {
+  outline: none;
+}
+.slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 9.4px;
+  cursor: pointer;
+  box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.43), 0px 0px 0px rgba(13, 13, 13, 0.43);
+  background: #a9a9a9;
+  border-radius: 25px;
+  border: 0px solid #000000;
+}
+.slider::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 40px;
+  width: 41px;
+  border-radius: 25px;
+  background: red;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -15.3px;
+}
+
+.slider:focus::-webkit-slider-runnable-track {
+  background: #a9a9a9;
+}
+.slider::-moz-range-track {
+  width: 100%;
+  height: 9.4px;
+  cursor: pointer;
+  box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.43), 0px 0px 0px rgba(13, 13, 13, 0.43);
+  background: #a9a9a9;
+  border-radius: 25px;
+  border: 0px solid #000000;
+}
+.slider::-moz-range-thumb {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 40px;
+  width: 41px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.slider::-ms-track {
+  width: 100%;
+  height: 9.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+.slider::-ms-fill-lower {
+  background: #a9a9a9;
+  border: 0px solid #000000;
+  border-radius: 50px;
+  box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.43), 0px 0px 0px rgba(13, 13, 13, 0.43);
+}
+.slider::-ms-fill-upper {
+  background: #a9a9a9;
+  border: 0px solid #000000;
+  border-radius: 50px;
+  box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.43), 0px 0px 0px rgba(13, 13, 13, 0.43);
+}
+.slider::-ms-thumb {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 40px;
+  width: 41px;
+  border-radius: 25px;
+  background: #ffffff;
+  cursor: pointer;
+  height: 9.4px;
+}
+.slider:focus::-ms-fill-lower {
+  background: #a9a9a9;
+}
+.slider:focus::-ms-fill-upper {
+  background: #a9a9a9;
+}
+
+.sliderScale::-webkit-slider-thumb {
+  background-size: contain;
+  background-color: transparent;
+  background-image: url('images/zoom.png');
+  background-position: center;
+}
+
+.sliderRotate::-webkit-slider-thumb {
+  background-size: contain;
+  background-color: transparent;
+  background-image: url('images/rotate.png');
+  background-position: center;
+}
+
+.sliderScale::-webkit-slider-thumb {
+  background-size: contain;
+  background-color: transparent;
+  background-image: url('images/zoom.png');
+  background-position: center;
+}
+
+.sliderNumber::-webkit-slider-thumb {
+  background-size: contain;
+  background-color: transparent;
+  background-image: url('images/hashtag.png');
+  background-position: center;
+}
+
