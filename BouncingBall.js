@@ -106,56 +106,131 @@ class BouncingBall {
 
 
 	boxColission() {
-		//bottom wall
-		if (this.y > y0 + boxheight/2 - this.radius) {
-			this.y = y0 + boxheight/2 - this.radius;
-			this.speedy *= -1;
+		//check if ball is out of bounds
+		let outsideContainer = 
+			(this.x > x0+boxwidth/2-this.radius)  || (this.x < x0-boxwidth/2+this.radius)  ||
+			(this.y > y0+boxheight/2-this.radius) || (this.y < y0-boxheight/2+this.radius) ||
+			(this.z > z0+boxdepth/2-this.radius)  || (this.z < z0-boxdepth/2+this.radius);
+		let insideContainer = 
+			(this.x < x0+innerboxwidth/2+this.radius)  && (this.x > x0-innerboxwidth/2-this.radius) 
+			&&
+			(this.y < y0+innerboxheight/2+this.radius) && (this.y > y0-innerboxheight/2-this.radius) &&
+			(this.z < z0+innerboxdepth/2+this.radius)  && (this.z > z0-innerboxdepth/2-this.radius);
+		let insideBattery =  
+			(this.x < x0+batteryLength/2+this.radius)  && (this.x > x0-batteryLength/2-this.radius) 
+			&&
+			(this.y < y0+innerboxheight/2+this.radius) && (this.y > y0-innerboxheight/2-this.radius) &&
+			(this.z < batteryz+batteryDepth+this.radius)  && (this.z > batteryz-batteryDepth/2-this.radius);
+
+		let outOfBounds = outsideContainer || insideContainer || insideBattery;
+
+		if (outOfBounds){
+			let xOut = this.x;
+			let yOut = this.y;
+			let zOut = this.z;
+
+			this.x -= this.speedx;
+			this.y -= this.speedy;
+			this.z -= this.speedz;
+
+			let xIn = this.x;
+			let yIn = this.y;
+			let zIn = this.z;
+
+			//reverse speed
+			if ((xOut+this.radius>x0+boxwidth/2) && (xIn+this.radius<=x0+boxwidth/2)){
+				this.speedx *= -1; 
+			}
+			else if ((xOut-this.radius<x0-boxwidth/2) && (xIn-this.radius>=x0-boxwidth/2)){
+				this.speedx *= -1;
+			}
+			else if ((yOut+this.radius>y0+boxheight/2) && (yIn+this.radius<=y0+boxheight/2)){
+				this.speedy *= -1; 
+			}
+			else if ((yOut-this.radius<y0-boxheight/2) && (yIn-this.radius>=y0-boxheight/2)){
+				this.speedy *= -1;
+			}
+			else if ((zOut+this.radius>z0+boxdepth/2) && (zIn+this.radius<=z0+boxdepth/2)){
+				this.speedz *= -1;
+			}
+			else if ((zOut-this.radius<z0-boxdepth/2) && (zIn-this.radius>=z0-boxdepth/2)){
+				this.speedz *= -1;
+			}
+			else if ((xOut<x0+innerboxwidth/2+this.radius) && (xIn>=x0+innerboxwidth/2+this.radius)){
+				this.speedx *= -1; 
+			}
+			else if ((xOut>x0-innerboxwidth/2-this.radius) && (xIn<=x0-innerboxwidth/2-this.radius)){
+				this.speedx *= -1;
+			}
+			else if ((zOut<z0+innerboxdepth/2+this.radius) && (zIn>=z0+innerboxdepth/2+this.radius)){
+				this.speedz *= -1; 
+			}
+			else if ((zOut>z0-innerboxdepth/2-this.radius) && (zIn<=z0-innerboxdepth/2-this.radius)){
+				this.speedz *= -1;
+			} 
+			else if ((xOut<x0+batteryLength/2+this.radius) && (xIn>=x0+batteryLength/2+this.radius)){
+				this.speedx *= -1; 
+			}
+			else if ((xOut>x0-batteryLength/2-this.radius) && (xIn<=x0-batteryLength/2-this.radius)){
+				this.speedx *= -1;
+			}
+
 			this.speedx *=  colissionElasticity;
 			this.speedy *=  colissionElasticity;
 			this.speedz *=  colissionElasticity;
 		}
-		//top wall
-		if (this.y < y0 - boxheight/2 + this.radius) {
-			this.y = y0 - boxheight/2 + this.radius;
-			this.speedy *= -1;
-			this.speedx *=  colissionElasticity;
-			this.speedy *=  colissionElasticity;
-			this.speedz *=  colissionElasticity;
-		}
-		//right wall
-		if (this.x > x0 + boxwidth/2 - this.radius) {
-			this.x = x0 + boxwidth/2 - this.radius;
-			this.speedx *= -1;
-			this.speedx *=  colissionElasticity;
-			this.speedy *=  colissionElasticity;
-			this.speedz *=  colissionElasticity;
-		}
-		//left wall
-		if (this.x < x0 - boxwidth/2 + this.radius) {
-			this.x = x0 - boxwidth/2 + this.radius;
-			this.speedx *= -1;
-			this.speedx *=  colissionElasticity;
-			this.speedy *=  colissionElasticity;
-			this.speedz *=  colissionElasticity;
-		}
-		//front wall
-		if (this.z > z0 + boxdepth/2 - this.radius) {
-			this.z = z0 + boxdepth/2 - this.radius;
-			this.speedz *= -1;
-			this.speedx *=  colissionElasticity;
-			this.speedy *=  colissionElasticity;
-			this.speedz *=  colissionElasticity;
-		}
-		//back wall
-		if (this.z < z0 - boxdepth/2 + this.radius) {
-			this.z = z0 - boxdepth/2 + this.radius;
-			this.speedz *= -1;
-			this.speedx *=  colissionElasticity;
-			this.speedy *=  colissionElasticity;
-			this.speedz *=  colissionElasticity;
-		}
+
+		//			//bottom wall
+		//			if (this.y > y0 + boxheight/2 - this.radius) {
+		//				this.y = y0 + boxheight/2 - this.radius;
+		//				this.speedy *= -1;
+		//				this.speedx *=  colissionElasticity;
+		//				this.speedy *=  colissionElasticity;
+		//				this.speedz *=  colissionElasticity;
+		//			}
+		//			//top wall
+		//			if (this.y < y0 - boxheight/2 + this.radius) {
+		//				this.y = y0 - boxheight/2 + this.radius;
+		//				this.speedy *= -1;
+		//				this.speedx *=  colissionElasticity;
+		//				this.speedy *=  colissionElasticity;
+		//				this.speedz *=  colissionElasticity;
+		//			}
+		//			//right wall
+		//			if (this.x > x0 + boxwidth/2 - this.radius) {
+		//				this.x = x0 + boxwidth/2 - this.radius;
+		//				this.speedx *= -1;
+		//				this.speedx *=  colissionElasticity;
+		//				this.speedy *=  colissionElasticity;
+		//				this.speedz *=  colissionElasticity;
+		//			}
+		//			//left wall
+		//			if (this.x < x0 - boxwidth/2 + this.radius) {
+		//				this.x = x0 - boxwidth/2 + this.radius;
+		//				this.speedx *= -1;
+		//				this.speedx *=  colissionElasticity;
+		//				this.speedy *=  colissionElasticity;
+		//				this.speedz *=  colissionElasticity;
+		//			}
+		//			//front wall
+		//			if (this.z > z0 + boxdepth/2 - this.radius) {
+		//				this.z = z0 + boxdepth/2 - this.radius;
+		//				this.speedz *= -1;
+		//				this.speedx *=  colissionElasticity;
+		//				this.speedy *=  colissionElasticity;
+		//				this.speedz *=  colissionElasticity;
+		//			}
+		//			//back wall
+		//			if (this.z < z0 - boxdepth/2 + this.radius) {
+		//				this.z = z0 - boxdepth/2 + this.radius;
+		//				this.speedz *= -1;
+		//				this.speedx *=  colissionElasticity;
+		//				this.speedy *=  colissionElasticity;
+		//				this.speedz *=  colissionElasticity;
+		//			}
+
 	}
-	
+
 	ringColission() {
 		//distance from center in xz plane
 		let d = Math.sqrt(this.x*this.x + this.z*this.z);
@@ -208,65 +283,81 @@ class BouncingBall {
 			this.speedz *=  colissionElasticity;
 		}
 	}
-	
+
 	batteryColission(){
 		//distance from center of battery in xz plane
 		let d = Math.sqrt(this.x*this.x + (-batteryz + this.z)*(-batteryz + this.z));
 		//radial velocity with respect to battery in xz plane
 		let rv = this.x*this.speedx/d + (-batteryz + this.z)*this.speedz/d;
-		
+
 		if (d < batteryRadius + this.radius){
+			//right wall
+			if (this.x > x0 + batteryLength/2 - this.radius) {
+				this.x = x0 + batteryLength/2 - this.radius;
+				this.speedx *= -1;
+				this.speedx *=  colissionElasticity;
+				this.speedy *=  colissionElasticity;
+				this.speedz *=  colissionElasticity;
+			}
+			//left wall
+			if (this.x < x0 - batteryLength/2 + this.radius) {
+				this.x = x0 - batteryLength/2 + this.radius;
+				this.speedx *= -1;
+				this.speedx *=  colissionElasticity;
+				this.speedy *=  colissionElasticity;
+				this.speedz *=  colissionElasticity;
+			}
 			//move back into the box
-			let exsp = batteryRadius + this.radius - d;
-			this.x += exsp*this.x/d;
-			this.z += exsp*(-batteryz + this.z)/d;
-
-			//reverse radial velocity
-			this.speedx -= 2*rv*this.x/d;
-			this.speedz -= 2*rv*(-batteryz + this.z)/d;
-
-			this.speedx *=  colissionElasticity;
-			this.speedy *=  colissionElasticity;
-			this.speedz *=  colissionElasticity;
+			//			let exsp = batteryRadius + this.radius - d;
+			//			this.x += exsp*this.x/d;
+			//			this.z += exsp*(-batteryz + this.z)/d;
+			//
+			//			//reverse radial velocity
+			//			this.speedx -= 2*rv*this.x/d;
+			//			this.speedz -= 2*rv*(-batteryz + this.z)/d;
+			//
+			//			this.speedx *=  colissionElasticity;
+			//			this.speedy *=  colissionElasticity;
+			//			this.speedz *=  colissionElasticity;
 		}
-		
-	
+
+
 	}
 
-//	staticcolission(otherball) {
-//		// calculate distance vector
-//		let dx = this.x - otherball.x;
-//		let dy = this.y - otherball.y;
-//		let dz = this.z - otherball.z;
-//		let d = Math.sqrt(dx*dx + dy*dy + dz*dz);
-//
-//		if (d <= (this.radius + otherball.radius)){
-//			// speed on the line of colission 
-//			let vx1 = (dx*this.speedx+dy*this.speedy+dz*this.speedz)/pow(d,2)*dx;
-//			let vy1 = (dx*this.speedx+dy*this.speedy+dz*this.speedz)/pow(d,2)*dy;
-//			let vz1 = (dx*this.speedx+dy*this.speedy+dz*this.speedz)/pow(d,2)*dz;
-//
-//
-//			// space them out, so they don't overlap
-//			let exsp = (this.radius+otherball.radius)-d;
-//			//print(d);
-//			this.x += exsp/2*dx/d;
-//			this.y += exsp/2*dy/d; 
-//			this.z += exsp/2*dz/d;
-//
-//			// invert speed
-//			this.speedx +=  -2*vx1;
-//			this.speedy +=  -2*vy1;
-//			this.speedz +=  -2*vz1;
-//
-//			this.speedx *= colissionElasticity/10;
-//			this.speedy *= colissionElasticity/10;
-//			this.speedz *= colissionElasticity/10;
-//
-//		}
-//
-//
-//	}
+	//	staticcolission(otherball) {
+	//		// calculate distance vector
+	//		let dx = this.x - otherball.x;
+	//		let dy = this.y - otherball.y;
+	//		let dz = this.z - otherball.z;
+	//		let d = Math.sqrt(dx*dx + dy*dy + dz*dz);
+	//
+	//		if (d <= (this.radius + otherball.radius)){
+	//			// speed on the line of colission 
+	//			let vx1 = (dx*this.speedx+dy*this.speedy+dz*this.speedz)/pow(d,2)*dx;
+	//			let vy1 = (dx*this.speedx+dy*this.speedy+dz*this.speedz)/pow(d,2)*dy;
+	//			let vz1 = (dx*this.speedx+dy*this.speedy+dz*this.speedz)/pow(d,2)*dz;
+	//
+	//
+	//			// space them out, so they don't overlap
+	//			let exsp = (this.radius+otherball.radius)-d;
+	//			//print(d);
+	//			this.x += exsp/2*dx/d;
+	//			this.y += exsp/2*dy/d; 
+	//			this.z += exsp/2*dz/d;
+	//
+	//			// invert speed
+	//			this.speedx +=  -2*vx1;
+	//			this.speedy +=  -2*vy1;
+	//			this.speedz +=  -2*vz1;
+	//
+	//			this.speedx *= colissionElasticity/10;
+	//			this.speedy *= colissionElasticity/10;
+	//			this.speedz *= colissionElasticity/10;
+	//
+	//		}
+	//
+	//
+	//	}
 
 	ballcolission(otherball) {
 		// calculate distance vector
@@ -304,7 +395,7 @@ class BouncingBall {
 			this.speedx *=  colissionElasticity;
 			this.speedy *=  colissionElasticity;
 			this.speedz *=  colissionElasticity;
-			
+
 			//annihilation
 			if (this.charge*otherball.charge<0){
 				this.charge = 0;
@@ -348,6 +439,16 @@ class BouncingBall {
 			this.speedy += forceStrength*this.charge*otherball.charge*dy/pow(d,3);
 			this.speedz += forceStrength*this.charge*otherball.charge*dz/pow(d,3);
 		}
+	}
+	
+	emf() {
+		// calculate distance vector
+		let dx = this.x - x0;
+		let dy = this.y - y0;
+		let dz = this.z - batteryz;
+		let d = Math.sqrt(dx*dx + dy*dy + dz*dz);
+		
+		return forceStrength*this.charge*dx/pow(d,3);
 	}
 
 }
